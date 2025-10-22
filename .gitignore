@@ -1,0 +1,51 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+LINKEDIN_POST.md
+STATS_EXPLAINED.md
+API.md
+CACHING_AND_RETRY.md
+CONTRIBUTING.md
+CUSTOM_THEME.md
+FETCH_API_IMPLEMENTATION.md
+FINAL_IMPROVEMENTS.md
+FINAL_SOLUTION_SUMMARY.md
+FINAL_SUMMARY.md
+GEMINI_IMPLEMENTATION_SUMMARY.md
+GEMINI_SETUP.md
+HOW_TO_SEE_STATS.md
+IMPLEMENTATION_SUMMARY.md
+

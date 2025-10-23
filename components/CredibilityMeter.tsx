@@ -37,14 +37,15 @@ export function CredibilityMeter({ score, size = "md" }: CredibilityMeterProps) 
     return "#10B981"; // green
   };
 
-  const radius = size === "lg" ? 120 : size === "md" ? 90 : 60;
-  const strokeWidth = size === "lg" ? 12 : size === "md" ? 10 : 8;
+  // Responsive sizes - smaller on mobile
+  const radius = size === "lg" ? 90 : size === "md" ? 70 : 50;
+  const strokeWidth = size === "lg" ? 10 : size === "md" ? 8 : 6;
   const normalizedRadius = radius - strokeWidth / 2;
   const circumference = normalizedRadius * 2 * Math.PI;
   const strokeDashoffset = circumference - (displayScore / 100) * circumference;
 
-  const textSize = size === "lg" ? "text-5xl" : size === "md" ? "text-4xl" : "text-2xl";
-  const labelSize = size === "lg" ? "text-lg" : size === "md" ? "text-base" : "text-sm";
+  const textSize = size === "lg" ? "text-3xl sm:text-4xl md:text-5xl" : size === "md" ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl";
+  const labelSize = size === "lg" ? "text-base sm:text-lg" : size === "md" ? "text-sm sm:text-base" : "text-xs sm:text-sm";
 
   return (
     <div className="flex flex-col items-center justify-center">

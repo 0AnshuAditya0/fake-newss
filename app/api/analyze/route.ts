@@ -5,6 +5,7 @@ import { getCachedResult } from "@/lib/cache";
 import { AnalysisRequest } from "@/lib/types";
 import { checkRateLimit, getClientIP } from "@/lib/rate-limit";
 import { incrementTotalCalls, incrementCacheHits, incrementApiCalls } from "@/lib/gemini-service";
+import { generateId } from "@/lib/utils";
 
 export async function POST(request: NextRequest) {
   const startTime = Date.now();

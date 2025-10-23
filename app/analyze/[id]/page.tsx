@@ -28,23 +28,104 @@ export default function AnalysisPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const id = params.id as string;
-    const analysis = getAnalysisById(id);
+    const loadAnalysis = async () => {
+      const id = params.id as string;
+    
+    // First try to get from localStorage
+    let analysis = getAnalysisById(id);
 
     if (!analysis) {
-      router.push("/");
+      // If not in localStorage, try to fetch from global API
+      const fetchAnalysis = async () => {
+        try {
+          const response = await fetch("/api/global-stats");
+          if (response.ok) {
+            const data = await response.json();
+            const globalAnalysis = data.recentAnalyses?.find((a: any) => a.id === id);
+            
+            if (globalAnalysis) {
+              // Convert API response to AnalysisResult format
+              const converted: AnalysisResult = {
+                id: globalAnalysis.id,
+                originalText: globalAnalysis.excerpt,
+                prediction: globalAnalysis.prediction,
+                confidence: globalAnalysis.confidence,
+                overallScore: globalAnalysis.overallScore,
+                flags: globalAnalysis.flags || [],
+                signals: globalAnalysis.signals || {
+                  mlScore: 50,
+                  sentimentScore: 50,
+                  clickbaitScore: 50,
+                  sourceScore: 50,
+                  biasScore: 50,
+                },
+                source: {
+                  domain: globalAnalysis.domain,
+                  credibility: "high" as const,
+                },
+                timestamp: globalAnalysis.timestamp,
+                highlights: [],
+                explanation: "Analysis from global database",
+              };
+              
+              setResult(converted);
+              
+              // Get similar analyses
+              const recent = (data.recentAnalyses || [])
+                .filter((a: any) => a.id !== id)
+                .slice(0, 3)
+                .map((a: any) => ({
+                  id: a.id,
+                  originalText: a.excerpt,
+                  prediction: a.prediction,
+                  confidence: a.confidence,
+                  overallScore: a.overallScore,
+                  flags: a.flags || [],
+                  signals: a.signals || {
+                    mlScore: 50,
+                    sentimentScore: 50,
+                    clickbaitScore: 50,
+                    sourceScore: 50,
+                    biasScore: 50,
+                  },
+                  source: {
+                    domain: a.domain,
+                    credibility: "high" as const,
+                  },
+                  timestamp: a.timestamp,
+                  highlights: [],
+                  explanation: "",
+                }));
+              
+              setSimilarAnalyses(recent);
+              setLoading(false);
+              return;
+            }
+          }
+        } catch (error) {
+          console.error("Failed to fetch from global API:", error);
+        }
+        
+        // If still not found, redirect
+        router.push("/");
+      };
+      
+      fetchAnalysis();
       return;
     }
 
     setResult(analysis);
 
     // Get similar analyses (last 3, excluding current)
-    const recent = getRecentAnalyses()
+    const recent = (await getRecentAnalyses())
       .filter((a) => a.id !== id)
       .slice(0, 3);
     setSimilarAnalyses(recent);
 
-    setLoading(false);
+      setLoading(false);
+    };
+
+    loadAnalysis();
   }, [params.id, router]);
 
   const handleShare = async () => {
@@ -113,7 +194,7 @@ ${result.originalText}
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-cyan-400 mx-auto mb-4"></div>
           <p className="text-gray-700 dark:text-gray-300">Loading analysis...</p>
@@ -127,32 +208,32 @@ ${result.originalText}
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 py-8 sm:py-12 px-4 overflow-x-hidden">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <Link href="/">
-            <Button variant="ghost" className="mb-4 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-indigo-50 dark:hover:bg-slate-800">
-              <ArrowLeft className="w-4 h-4 mr-2" />
+            <Button variant="ghost" size="sm" className="mb-3 sm:mb-4 text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-cyan-400 hover:bg-indigo-50 dark:hover:bg-slate-800">
+              <ArrowLeft className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
               Back to Home
             </Button>
           </Link>
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
             Analysis Results
           </h1>
-          <p className="text-gray-700 dark:text-gray-300">
+          <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
             Detailed credibility analysis and breakdown
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
             {/* Credibility Score & Signal Analysis Side by Side */}
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {/* Credibility Score */}
               <Card className="bg-white dark:bg-slate-900 border-indigo-200 dark:border-cyan-500/30">
-                <CardContent className="pt-8 pb-8">
+                <CardContent className="pt-6 pb-6 sm:pt-8 sm:pb-8">
                   <CredibilityMeter score={result.overallScore} size="lg" />
                 </CardContent>
               </Card>
@@ -168,8 +249,8 @@ ${result.originalText}
                 <CardContent className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">ML Model</span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">{result.signals.mlScore}%</span>
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-200">ML Model</span>
+                      <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{result.signals.mlScore}%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5">
                       <div
@@ -183,8 +264,8 @@ ${result.originalText}
 
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Sentiment</span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">{result.signals.sentimentScore}%</span>
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Sentiment</span>
+                      <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{result.signals.sentimentScore}%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5">
                       <div
@@ -198,8 +279,8 @@ ${result.originalText}
 
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Clickbait</span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">{result.signals.clickbaitScore}%</span>
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Clickbait</span>
+                      <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{result.signals.clickbaitScore}%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5">
                       <div
@@ -213,8 +294,8 @@ ${result.originalText}
 
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Source</span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">{result.signals.sourceScore}%</span>
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Source</span>
+                      <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{result.signals.sourceScore}%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5">
                       <div
@@ -228,8 +309,8 @@ ${result.originalText}
 
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-xs font-medium text-gray-700 dark:text-gray-300">Bias</span>
-                      <span className="text-xs font-bold text-gray-900 dark:text-white">{result.signals.biasScore}%</span>
+                      <span className="text-xs font-medium text-gray-700 dark:text-gray-200">Bias</span>
+                      <span className="text-xs font-bold text-gray-900 dark:text-gray-100">{result.signals.biasScore}%</span>
                     </div>
                     <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-1.5">
                       <div

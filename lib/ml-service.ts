@@ -2,6 +2,7 @@ import { AnalysisResult, Highlight, Prediction, SourceInfo } from "./types";
 import { generateId, extractDomain } from "./utils";
 import { getCachedResult, setCachedResult } from "./cache";
 import { analyzeWithGeminiRetry, getGeminiStatus } from "./gemini-service";
+import { updateGlobalStats } from "./stats-client";
 
 // Validate API keys and log status
 const geminiStatus = getGeminiStatus();
@@ -177,24 +178,11 @@ async function callHuggingFaceAPI(
 }
 
 /**
- * Try multiple models with fallback chain
- * Returns the first successful model result
+ * Legacy function - no longer used (using Gemini instead)
+ * Kept for backward compatibility
  */
 async function callHuggingFaceWithModelFallback(text: string): Promise<{ result: any; model: string }> {
-  for (const model of MODELS) {
-    try {
-      console.log(`🎯 Trying model: ${model}`);
-      const result = await callHuggingFaceAPI(text, model, 2); // 2 retries per model
-      console.log(`✅ Success with model: ${model}`);
-      return { result, model };
-    } catch (error: any) {
-      console.log(`❌ Model ${model} failed: ${error.message}`);
-      console.log('🔄 Trying next model in fallback chain...');
-      continue;
-    }
-  }
-  
-  throw new Error('All models failed');
+  throw new Error('HuggingFace models not configured - using Gemini AI instead');
 }
 
 // Known credible sources
@@ -447,6 +435,21 @@ export async function analyzeFakeNews(
   // 8. CACHE: Store result for future requests
   setCachedResult(text, result);
   console.log(`💾 Result cached | Prediction: ${prediction} (${Math.round(confidence)}% confidence)`);
+
+  // 9. GLOBAL STATS: Push to aggregated dataset (non-blocking)
+  updateGlobalStats({
+    id: result.id,
+    prediction: result.prediction,
+    confidence: result.confidence,
+    overallScore: result.overallScore,
+    domain: result.source?.domain ?? "unknown",
+    timestamp: result.timestamp,
+    flags: result.flags,
+    signals: result.signals,
+    excerpt: text.substring(0, 200),
+  }).catch((error: unknown) => {
+    console.error("Failed to update global stats:", error);
+  });
 
   return result;
 }

@@ -16,40 +16,60 @@ export default function DashboardPage() {
     averageConfidence: 0,
     mostAnalyzedDomain: "N/A",
   });
+  const [globalStats, setGlobalStats] = useState<any>(null);
   const [analyses, setAnalyses] = useState<AnalysisResult[]>([]);
   const [chartData, setChartData] = useState<any[]>([]);
+  const [globalChartData, setGlobalChartData] = useState<any[]>([]);
 
   useEffect(() => {
-    const loadedStats = getStats();
-    const loadedAnalyses = getRecentAnalyses();
+    // Load local stats and analyses
+    const loadData = async () => {
+      const loadedStats = await getStats();
+      const loadedAnalyses = await getRecentAnalyses();
 
-    setStats(loadedStats);
-    setAnalyses(loadedAnalyses);
+      setStats(loadedStats);
+      setAnalyses(loadedAnalyses);
 
-    // Calculate chart data
-    const fakeCount = loadedAnalyses.filter((a) => a.prediction === "FAKE").length;
-    const realCount = loadedAnalyses.filter((a) => a.prediction === "REAL").length;
-    const uncertainCount = loadedAnalyses.filter(
-      (a) => a.prediction === "UNCERTAIN"
-    ).length;
+      // Calculate chart data from local analyses
+      if (loadedAnalyses.length > 0) {
+        const fakeCount = loadedAnalyses.filter(a => a.prediction === "FAKE").length;
+        const realCount = loadedAnalyses.filter(a => a.prediction === "REAL").length;
+        const uncertainCount = loadedAnalyses.filter(a => a.prediction === "UNCERTAIN").length;
 
-    setChartData([
-      { name: "Fake", value: fakeCount, color: "#EF4444" },
-      { name: "Real", value: realCount, color: "#10B981" },
-      { name: "Uncertain", value: uncertainCount, color: "#F59E0B" },
-    ]);
+        setChartData([
+          { name: "Fake", value: fakeCount, color: "#EF4444" },
+          { name: "Real", value: realCount, color: "#10B981" },
+          { name: "Uncertain", value: uncertainCount, color: "#F59E0B" },
+        ]);
+      } else {
+        setChartData([]);
+      }
+    };
+
+    loadData();
+
+    // Listen for cross-device sync updates
+    const handleAnalysesUpdate = () => {
+      loadData();
+    };
+
+    window.addEventListener('analysesUpdated', handleAnalysesUpdate);
+
+    return () => {
+      window.removeEventListener('analysesUpdated', handleAnalysesUpdate);
+    };
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 py-8 sm:py-12 px-4">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
             Analytics Dashboard
           </h1>
-          <p className="text-gray-700 dark:text-gray-300">
-            Overview of your fake news detection analyses
+          <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+            Your personal analysis statistics 📊
           </p>
         </div>
 
@@ -70,21 +90,22 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               {chartData.length > 0 && chartData.some((d) => d.value > 0) ? (
-                <ResponsiveContainer width="100%" height={400}>
+                <ResponsiveContainer width="100%" height={300} className="sm:!h-[400px]">
                   <PieChart>
                     <Pie
                       data={chartData}
                       cx="50%"
                       cy="50%"
-                      labelLine={true}
+                      labelLine={false}
                       label={({ name, percent }) =>
                         `${name}: ${(percent * 100).toFixed(0)}%`
                       }
-                      outerRadius={120}
-                      innerRadius={60}
+                      outerRadius={80}
+                      innerRadius={40}
                       fill="#8884d8"
                       dataKey="value"
                       paddingAngle={5}
+                      className="sm:!outerRadius-[120] sm:!innerRadius-[60]"
                     >
                       {chartData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
@@ -95,18 +116,20 @@ export default function DashboardPage() {
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',
                         border: '2px solid #4F46E5',
                         borderRadius: '8px',
-                        padding: '8px'
+                        padding: '8px',
+                        fontSize: '12px'
                       }}
                     />
                     <Legend 
                       verticalAlign="bottom" 
                       height={36}
                       iconType="circle"
+                      wrapperStyle={{ fontSize: '12px' }}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="h-[400px] flex items-center justify-center text-gray-500 dark:text-gray-400">
+                <div className="h-[300px] sm:h-[400px] flex items-center justify-center text-gray-500 dark:text-gray-400">
                   <div className="text-center">
                     <BarChart3 className="w-12 h-12 mx-auto mb-2 opacity-50" />
                     <p>No data available yet</p>

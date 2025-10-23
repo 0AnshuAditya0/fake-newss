@@ -26,6 +26,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.env.example
 
 # vercel
 .vercel
@@ -33,6 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# data storage
+/data
 
 LINKEDIN_POST.md
 STATS_EXPLAINED.md
@@ -48,4 +52,14 @@ GEMINI_IMPLEMENTATION_SUMMARY.md
 GEMINI_SETUP.md
 HOW_TO_SEE_STATS.md
 IMPLEMENTATION_SUMMARY.md
+DEPLOY_TO_VERCEL.md
+FIXED_APPLIED.md
+MODEL_INFO.md
+PRODUCTION_CHECKLIST.md
+PROJECT_SUMMARY.md
+QUICK_REFERENCE.md
+QUICKSTART.md
+SETUP.md
+SUPABASE_SETUP.md
+
 

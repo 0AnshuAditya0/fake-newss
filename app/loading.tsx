@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
       <div className="text-center">
         {/* Animated Logo */}
         <div className="relative w-20 h-20 mx-auto mb-6">

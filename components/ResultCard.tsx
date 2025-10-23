@@ -52,14 +52,14 @@ export function ResultCard({ result }: ResultCardProps) {
   return (
     <div className="space-y-6">
       {/* Verdict Section */}
-      <Card>
+      <Card className="bg-white dark:bg-slate-900 border-indigo-200 dark:border-cyan-500/30">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <CardTitle className="flex items-center gap-3 text-base sm:text-lg">
               {getPredictionIcon()}
               Analysis Verdict
             </CardTitle>
-            <Badge variant={getPredictionColor() as any} className="text-lg px-4 py-2">
+            <Badge variant={getPredictionColor() as any} className="text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2 w-fit">
               {result.prediction}
             </Badge>
           </div>

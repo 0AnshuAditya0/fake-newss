@@ -94,7 +94,7 @@ export function TextHighlighter({ text, highlights }: TextHighlighterProps) {
     result.push(<span key="text-end">{text.substring(lastIndex)}</span>);
   }
 
-  return <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">{result}</div>;
+  return <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap break-words overflow-x-hidden">{result}</div>;
 }
 
 function getHighlightColor(type: Highlight["type"]): string {

@@ -49,33 +49,35 @@ export function RecentAnalyses({ analyses, limit = 10 }: RecentAnalysesProps) {
         <CardTitle>Recent Analyses</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <div className="space-y-3 overflow-x-hidden w-full">
           {displayAnalyses.map((analysis) => (
             <div
               key={analysis.id}
-              className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition"
+              className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 border border-gray-200 dark:border-slate-700 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-800 transition gap-2 w-full"
             >
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <Badge variant={getPredictionVariant(analysis.prediction) as any}>
+              <div className="flex-1 min-w-0 w-full">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-1">
+                  <Badge variant={getPredictionVariant(analysis.prediction) as any} className="w-fit text-xs sm:text-sm">
                     {analysis.prediction}
                   </Badge>
-                  <span className="text-sm font-semibold text-gray-900">
+                  <span className="text-sm sm:text-base font-semibold text-gray-900 dark:text-white">
                     {analysis.overallScore}/100
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 truncate">
-                  {analysis.source?.domain || truncateText(analysis.originalText, 60)}
+                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 break-words">
+                  {analysis.source?.domain || truncateText(analysis.originalText, 50)}
                 </p>
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                   {formatDate(analysis.timestamp)}
                 </p>
               </div>
-              <Link href={`/analyze/${analysis.id}`}>
-                <Button variant="ghost" size="sm">
-                  <ExternalLink className="w-4 h-4" />
-                </Button>
-              </Link>
+              <div className="flex-shrink-0 w-full sm:w-auto">
+                <Link href={`/analyze/${analysis.id}`} className="w-full sm:w-auto">
+                  <Button variant="ghost" size="sm" className="w-full sm:w-auto">
+                    <ExternalLink className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           ))}
         </div>

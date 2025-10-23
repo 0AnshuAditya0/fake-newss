@@ -67,7 +67,7 @@ export default function AdminPage() {
 
   if (loading && !stats) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 dark:border-cyan-400 mx-auto mb-4"></div>
           <p className="text-gray-700 dark:text-gray-300">Loading statistics...</p>
@@ -78,7 +78,7 @@ export default function AdminPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-slate-950 flex items-center justify-center">
         <Card className="max-w-md">
           <CardContent className="pt-6">
             <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-4" />
@@ -95,19 +95,19 @@ export default function AdminPage() {
   if (!stats) return null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-gradient-to-br dark:from-slate-900 dark:via-purple-900 dark:to-slate-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-purple-50 to-blue-50 dark:bg-slate-950 py-8 sm:py-12 px-4">
       <div className="container mx-auto max-w-7xl">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">
               System Statistics
             </h1>
-            <p className="text-gray-700 dark:text-gray-300">
-              Real-time monitoring of API performance and cache efficiency
+            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-300">
+              Real-time monitoring of API performance
             </p>
           </div>
-          <Button onClick={fetchStats} disabled={loading} variant="outline">
+          <Button onClick={fetchStats} disabled={loading} variant="outline" size="sm" className="w-full sm:w-auto">
             <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
             Refresh
           </Button>

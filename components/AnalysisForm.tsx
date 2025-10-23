@@ -6,8 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Link as LinkIcon, FileText, Clipboard } from "lucide-react";
-import { isValidUrl } from "@/lib/utils";
-import { saveAnalysis } from "@/lib/utils";
+import { isValidUrl, saveAnalysis, generateId, extractDomain } from "@/lib/utils";
 
 export function AnalysisForm() {
   const router = useRouter();
@@ -70,8 +69,8 @@ export function AnalysisForm() {
         throw new Error(data.error || "Analysis failed");
       }
 
-      // Save to localStorage
-      saveAnalysis(data);
+      // Save to localStorage and global stats
+      await saveAnalysis(data);
 
       // Navigate to results page
       router.push(`/analyze/${data.id}`);

@@ -6,19 +6,19 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative bg-transparent py-20 px-4">
+      <section className="relative bg-transparent py-12 sm:py-16 md:py-20 px-4">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-cyan-500/20 dark:to-blue-500/20 rounded-full mb-6 backdrop-blur-sm border-2 border-indigo-300 dark:border-cyan-400 shadow-2xl">
-              <Shield className="w-10 h-10 text-indigo-600 dark:text-cyan-400 animate-pulse" strokeWidth={2.5} />
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-cyan-500/20 dark:to-blue-500/20 rounded-full mb-4 sm:mb-6 backdrop-blur-sm border-2 border-indigo-300 dark:border-cyan-400 shadow-2xl">
+              <Shield className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-600 dark:text-cyan-400 animate-pulse" strokeWidth={2.5} />
             </div>
-            <h1 className="text-5xl md:text-7xl font-extrabold text-gray-800 dark:text-white mb-6 drop-shadow-lg">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-extrabold text-gray-800 dark:text-white mb-4 sm:mb-6 drop-shadow-lg px-2">
               Detect Misinformation with{" "}
               <span className="block mt-2 bg-gradient-to-r from-indigo-600 via-purple-600 to-blue-600 dark:from-cyan-400 dark:via-blue-400 dark:to-purple-400 bg-clip-text text-transparent">
                 AI-Powered Analysis
               </span>
             </h1>
-            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-8 font-medium">
+            <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-6 sm:mb-8 font-medium px-4">
               Powered by <span className="font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent">Google Gemini AI</span> with 90%+ accuracy.
               Verify news credibility in real-time and protect yourself from misinformation.
             </p>
@@ -30,50 +30,50 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm transition-colors duration-200">
+      <section className="py-12 sm:py-16 md:py-20 px-4 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm transition-colors duration-200">
         <div className="container mx-auto max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-4">
+          <div className="text-center mb-8 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-3 sm:mb-4 px-2">
               Powerful Features
             </h2>
-            <p className="text-lg text-gray-700 dark:text-gray-300 font-medium">
+            <p className="text-sm sm:text-base md:text-lg text-gray-700 dark:text-gray-300 font-medium px-4">
               Comprehensive analysis using Google Gemini AI and multiple detection methods
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="group p-8 rounded-2xl border-2 border-indigo-200 dark:border-cyan-500/30 bg-white dark:bg-slate-900/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-cyan-500/20 hover:scale-105 hover:border-indigo-400 dark:hover:border-cyan-400 transition-all duration-300">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-cyan-400 dark:to-blue-500 rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Target className="w-7 h-7 text-white" strokeWidth={2.5} />
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+            <div className="group p-6 sm:p-8 rounded-2xl border-2 border-indigo-200 dark:border-cyan-500/30 bg-white dark:bg-slate-900/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-cyan-500/20 hover:scale-105 hover:border-indigo-400 dark:hover:border-cyan-400 transition-all duration-300">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-cyan-400 dark:to-blue-500 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Target className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2 sm:mb-3">
                 AI-Powered Detection
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                 Google Gemini AI analyzes factual accuracy, emotional manipulation, and misinformation patterns with 90%+ accuracy.
               </p>
             </div>
 
-            <div className="group p-8 rounded-2xl border-2 border-indigo-200 dark:border-cyan-500/30 bg-white dark:bg-slate-900/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-cyan-500/20 hover:scale-105 hover:border-indigo-400 dark:hover:border-cyan-400 transition-all duration-300">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-cyan-400 dark:to-blue-500 rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Zap className="w-7 h-7 text-white" strokeWidth={2.5} />
+            <div className="group p-6 sm:p-8 rounded-2xl border-2 border-indigo-200 dark:border-cyan-500/30 bg-white dark:bg-slate-900/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-cyan-500/20 hover:scale-105 hover:border-indigo-400 dark:hover:border-cyan-400 transition-all duration-300">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-cyan-400 dark:to-blue-500 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Zap className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2 sm:mb-3">
                 Real-Time Analysis
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                 Get instant credibility scores and intelligent explanations. Analyze articles by URL or paste text directly.
               </p>
             </div>
 
-            <div className="group p-8 rounded-2xl border-2 border-indigo-200 dark:border-cyan-500/30 bg-white dark:bg-slate-900/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-cyan-500/20 hover:scale-105 hover:border-indigo-400 dark:hover:border-cyan-400 transition-all duration-300">
-              <div className="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-cyan-400 dark:to-blue-500 rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                <Globe className="w-7 h-7 text-white" strokeWidth={2.5} />
+            <div className="group p-6 sm:p-8 rounded-2xl border-2 border-indigo-200 dark:border-cyan-500/30 bg-white dark:bg-slate-900/80 backdrop-blur-sm hover:shadow-2xl hover:shadow-indigo-500/20 dark:hover:shadow-cyan-500/20 hover:scale-105 hover:border-indigo-400 dark:hover:border-cyan-400 transition-all duration-300">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-indigo-500 to-purple-600 dark:from-cyan-400 dark:to-blue-500 rounded-xl flex items-center justify-center mb-3 sm:mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                <Globe className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={2.5} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-800 dark:text-white mb-2 sm:mb-3">
                 Source Verification
               </h3>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                 Cross-references sources and assesses domain credibility with comprehensive fact-checking.
               </p>
             </div>
@@ -82,28 +82,28 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-indigo-100 to-purple-100 dark:bg-gradient-to-br dark:from-indigo-900/40 dark:to-purple-900/40">
+      <section className="py-12 sm:py-16 md:py-20 px-4 bg-gradient-to-br from-indigo-100 to-purple-100 dark:bg-gradient-to-br dark:from-slate-800 dark:to-slate-700">
         <div className="container mx-auto max-w-6xl">
-          <div className="grid md:grid-cols-3 gap-8 text-center">
-            <div className="p-8 bg-white/50 dark:bg-slate-800/50 rounded-2xl backdrop-blur-sm border border-indigo-200 dark:border-cyan-500/30">
-              <div className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">5+</div>
-              <div className="text-gray-800 dark:text-white font-bold text-lg">Detection Signals</div>
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 text-center">
+            <div className="p-6 sm:p-8 bg-white/50 dark:bg-slate-800/50 rounded-2xl backdrop-blur-sm border border-indigo-200 dark:border-cyan-500/30">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">5+</div>
+              <div className="text-gray-800 dark:text-white font-bold text-base sm:text-lg">Detection Signals</div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
                 Multiple analysis methods
               </p>
             </div>
 
-            <div className="p-8 bg-white/50 dark:bg-slate-800/50 rounded-2xl backdrop-blur-sm border border-indigo-200 dark:border-cyan-500/30">
-              <div className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">90%+</div>
-              <div className="text-gray-800 dark:text-white font-bold text-lg">Accuracy Rate</div>
+            <div className="p-6 sm:p-8 bg-white/50 dark:bg-slate-800/50 rounded-2xl backdrop-blur-sm border border-indigo-200 dark:border-cyan-500/30">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">90%+</div>
+              <div className="text-gray-800 dark:text-white font-bold text-base sm:text-lg">Accuracy Rate</div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
                 Using Google Gemini AI
               </p>
             </div>
 
-            <div className="p-8 bg-white/50 dark:bg-slate-800/50 rounded-2xl backdrop-blur-sm border border-indigo-200 dark:border-cyan-500/30">
-              <div className="text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">&lt;3s</div>
-              <div className="text-gray-800 dark:text-white font-bold text-lg">Avg Response Time</div>
+            <div className="p-6 sm:p-8 bg-white/50 dark:bg-slate-800/50 rounded-2xl backdrop-blur-sm border border-indigo-200 dark:border-cyan-500/30">
+              <div className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-cyan-400 dark:to-blue-400 bg-clip-text text-transparent mb-2">&lt;3s</div>
+              <div className="text-gray-800 dark:text-white font-bold text-base sm:text-lg">Avg Response Time</div>
               <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
                 Lightning-fast analysis
               </p>
